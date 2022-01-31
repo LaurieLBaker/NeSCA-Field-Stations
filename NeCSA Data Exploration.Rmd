@@ -1,0 +1,55 @@
+---
+title: "NeCSA Data Exploration"
+author: "Laurie Baker"
+date: "1/31/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+
+library(tidyverse)
+library(readr)
+
+```
+
+
+## Reading in the data
+
+```{r data import}
+
+temperature_df <- read_csv("data/NeCSA_data_template_Temperature_Data.csv")
+transect_df <- read_csv("data/NeCSA_data_template_Horizontal_Transect_Data.csv")
+column_meta_data <- read_csv("data/NeCSA_data_template_Column_Metadata.csv")
+
+```
+
+```{r data prep}
+
+temperature_df <- read_csv("data/NeCSA_data_template_Temperature_Data.csv")
+transect_df <- read_csv("data/NeCSA_data_template_Horizontal_Transect_Data.csv")
+column_meta_data <- read_csv("data/NeCSA_data_template_Column_Metadata.csv")
+
+```
+
+```{r explore temperature data}
+
+glimpse(temperature_df)
+
+```
+
+```{r explore transect data}
+
+glimpse(transect_df)
+
+```
+
+
+```{r explore meta data}
+
+glimpse(column_meta_data_df)
+
+```

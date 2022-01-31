@@ -1,0 +1,38 @@
+Column Title,,,
+Field Station,Name of NeCSA location,,
+Data Collection site,Location of data collection/ data collection site #,,
+Date,MM/DD/YYYY,,
+Time,24 hour format (4:00 = 4AM),,
+Tide,tidal height (H M L),,
+Quadrat,Quadrat location (0-90),,
+Species code,AscoCC,Ascophyllum canopy cover (0-25),Knotted wrack (Ascophyllum nodosum)
+,AscoSC,Ascophyllum substrate cover (0-25),Knotted wrack (Ascophyllum nodosum)
+,ChonCrSC,Chondrus substrate cover (0-25),Irish moss (Chondrus crispus)
+,Thalap,Thais lapillus (# per quadrat),Dog whelk (thais lapillus)
+,CarmaeTot,Carcinus maenus total (# per quadrat),Green Crab (Carnicus maenas)
+,CarmaeFem,Carcinus maenus females (# per quadrat),Green Crab (female)
+,CarmaeMale,Carcinus maenus males (# per quadrat),Green Crab (male)
+,CanborTot,Cancer irroratus total (# per quadrat),Jonah Crab (Cancer borealis)
+,CanborFem,Cancer irroratus females (# per quadrat),Jonah Crab (female)
+,CanborMale,Cancer irroratus males (# per quadrat),Jonah (male)
+,Astvul,Asterias vulgaris (# per quadrat),Northern sea star (Asterias vulgaris)
+Species Name,Knotted wrack (Ascophyllum nodosum),,
+,Irish moss (Chondrus crispus),,
+,Dog whelk (thais lapillus),,
+,Green Crab (Carnicus maenas),,
+,Green Crab (female),,
+,Green Crab (male),,
+,Jonah Crab (Cancer borealis),,
+,Jonah Crab (female),,
+,Jonah Crab (male),,
+,Northern sea star (Asterias vulgaris),,
+Water Temperature,Water temperature in degrees celcius,,
+,,,
+,,,
+,,,
+,,,
+Latitude,-90-90,,
+Longitude,-180-180,,
+Canopy cover,"The total number of 10 cm x 10 cm subquadrats occupied by the algal species. The minimum is 0, the maximum is 25, and partial subquadrats are allowed",,
+Substrate Cover,"The total number of subquadrats occupied by the holdfasts of the algal species. The minimum is 0, the maximum is 25, and partial subquadrats are allowed",,
+# per quadrat,Count of all individual animals found within the quadrat,,
