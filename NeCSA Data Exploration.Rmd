@@ -50,6 +50,6 @@ glimpse(transect_df)
 
 ```{r explore meta data}
 
-glimpse(column_meta_data_df)
+glimpse(column_meta_data)
 
 ```
