@@ -67,7 +67,8 @@ temperature_df %>%
                        fill = `Field Station`)) +
   geom_violin() +
   labs(title = "Ranges of Recorded Water Temperatures",
-       subtitle = "By NeCSA Field Station") +
+       subtitle = "By NeCSA Field Station",
+       y = "Water Temperature (degrees celsius)") +
   theme(legend.position = "bottom",
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
