@@ -53,3 +53,21 @@ glimpse(transect_df)
 glimpse(column_meta_data)
 
 ```
+
+```{r temp-range-by-facility}
+
+temperature_df %>%
+  ggplot(mapping = aes(x = `Field Station`, 
+                       y = `Water Temperature`,
+                       fill = `Field Station`)) +
+  geom_violin() +
+  labs(title = "Water Temperature Range",
+       subtitle = "By NeCSA Field Station") +
+  theme(legend.position = "bottom",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank(),
+        legend.title = element_blank()) 
+
+  
+```
