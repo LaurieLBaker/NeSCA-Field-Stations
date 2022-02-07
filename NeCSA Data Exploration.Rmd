@@ -1,15 +1,17 @@
 ---
 title: "NeCSA Data Exploration"
-author: "Laurie Baker"
+author: "Laurie Baker and Matt Clayton"
 date: "1/31/2022"
-output: html_document
+output: 
+  html_document:
+    toc: True
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-```{r libraries}
+```{r libraries, echo = FALSE}
 
 library(tidyverse)
 library(readr)
@@ -19,17 +21,9 @@ library(dplyr)
 ```
 
 
-## Reading in the data
+## Data Overview
 
-```{r data import}
-
-temperature_df <- read_csv("data/NeCSA_data_template_Temperature_Data.csv")
-transect_df <- read_csv("data/NeCSA_data_template_Horizontal_Transect_Data.csv")
-column_meta_data <- read_csv("data/NeCSA_data_template_Column_Metadata.csv")
-
-```
-
-```{r data prep}
+```{r data import, echo = FALSE}
 
 temperature_df <- read_csv("data/NeCSA_data_template_Temperature_Data.csv")
 transect_df <- read_csv("data/NeCSA_data_template_Horizontal_Transect_Data.csv")
@@ -37,11 +31,15 @@ column_meta_data <- read_csv("data/NeCSA_data_template_Column_Metadata.csv")
 
 ```
 
+
+### Temperature Data
 ```{r explore temperature data}
 
 glimpse(temperature_df)
 
 ```
+
+### Transect Data
 
 ```{r explore transect data}
 
@@ -49,6 +47,7 @@ glimpse(transect_df)
 
 ```
 
+### Column Meta Data
 
 ```{r explore meta data}
 
@@ -56,9 +55,11 @@ glimpse(column_meta_data)
 
 ```
 
-## Plotting Water Temperature Ranges at Each NeCSA Field Station
+## Plots
 
-```{r temp-range-by-facility}
+### Plotting Water Temperature Ranges at Each NeCSA Field Station
+
+```{r temp-range-by-facility, echo = FALSE}
 
 temperature_df %>%
   ggplot(mapping = aes(x = `Field Station`, 
@@ -75,9 +76,9 @@ temperature_df %>%
   
 ```
 
-# Mapping the Location of Each NeCSA Field Station on Gulf of Maine Leaflet
+### Mapping the Location of Each NeCSA Field Station on Gulf of Maine Leaflet
 
-```{r field-stations-leaflet}
+```{r field-stations-leaflet, echo = FALSE}
 
 # Create df for field station locations
 
