@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(readr)
+library(leaflet)
+library(dplyr)
 
 ```
 
@@ -54,6 +56,8 @@ glimpse(column_meta_data)
 
 ```
 
+## Plotting Water Temperature Ranges at Each NeCSA Field Station
+
 ```{r temp-range-by-facility}
 
 temperature_df %>%
@@ -61,13 +65,40 @@ temperature_df %>%
                        y = `Water Temperature`,
                        fill = `Field Station`)) +
   geom_violin() +
-  labs(title = "Water Temperature Range",
+  labs(title = "Ranges of Recorded Water Temperatures",
        subtitle = "By NeCSA Field Station") +
   theme(legend.position = "bottom",
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.title.x = element_blank(),
         legend.title = element_blank()) 
-
   
+```
+
+# Mapping the Location of Each NeCSA Field Station on Gulf of Maine Leaflet
+
+```{r field-stations-leaflet}
+
+# Create df for field station locations
+
+field_stations <- temperature_df %>%
+  group_by(`Field Station`) %>%
+  select(`Field Station`, Longitude, Latitude) %>%
+  distinct()
+
+# Create labels for leaflet
+
+labels <- sprintf(
+  "<strong>%s</strong><br/>",
+    field_stations$`Field Station` %>%
+      lapply(htmltools::HTML)) 
+
+# Generate Gulf of Maine leaflet indicating location of each field station
+
+leaflet(field_stations) %>%
+  addTiles() %>%
+  addProviderTiles(providers$Esri.OceanBasemap) %>%
+  addMarkers(~Longitude, ~Latitude, popup = labels) %>%
+    setView(lng = -69, lat = 43.7, zoom = 7.5) 
+
 ```
