@@ -7,7 +7,7 @@ output:
     toc: True
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
@@ -57,7 +57,7 @@ glimpse(column_meta_data)
 
 ## Plots
 
-### Plotting Water Temperature Ranges at Each NeCSA Field Station
+### Water Temperature Ranges at Each NeCSA Field Station
 
 ```{r temp-range-by-facility, echo = FALSE}
 
@@ -68,7 +68,7 @@ temperature_df %>%
   geom_violin() +
   labs(title = "Ranges of Recorded Water Temperatures",
        subtitle = "By NeCSA Field Station",
-       y = "Water Temperature (degrees celsius)") +
+       y = "Water Temperature (Celsius)") +
   theme(legend.position = "bottom",
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
@@ -78,7 +78,79 @@ temperature_df %>%
   
 ```
 
-### Mapping the Location of Each NeCSA Field Station on Gulf of Maine Leaflet
+### Water Temperature at Each NeCSA Field Station Over Time
+
+```{r temp-vs-time-by-station, echo = FALSE}
+
+# Reformat dates
+
+temperature_df$betterDates <- as.Date(temperature_df$Date, format = "%m-%d-%Y")
+
+# Create line plot of water temperature by field station over time
+
+temperature_df %>%
+  ggplot(mapping = aes(x = betterDates, 
+                       y = `Water Temperature`,
+                       colour = `Field Station`)) +
+  geom_line() +
+  labs(title = "Recorded Water Temperature Over Time",
+       subtitle = "By NeCSA Field Station",
+       y = "Water Temperature (Celsius)",
+       x = "Date") +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") +
+  guides(colour = guide_legend(nrow=3)) +
+  scale_x_date(date_breaks = "2 months" , date_labels = "%b-%y") +
+  guides(x =  guide_axis(angle = 45))
+
+```
+
+### Water Temperature Over Time (All Stations)
+
+```{r temp-vs-time-all-stations, echo = FALSE}
+
+# Reformat dates
+
+temperature_df$betterDates <- as.Date(temperature_df$Date, format = "%m-%d-%Y")
+
+# Create line plot of water temperature (all field stations)
+
+temperature_df %>%
+  ggplot(mapping = aes(x = betterDates, 
+                       y = `Water Temperature`)) +
+  geom_line(color = "blue") +
+  labs(title = "Recorded Water Temperature Over Time",
+       y = "Water Temperature (Celsius)",
+       x = "Date") +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") +
+  scale_x_date(date_breaks = "2 months" , date_labels = "%b-%y") +
+  guides(x =  guide_axis(angle = 45))
+
+```
+
+### Water Temperature Over Time Faceted by Field Station
+
+```{r temp-vs-time-by-facility-faceted, echo = FALSE}
+
+# Create faceted line plot of water temperature by field station over time
+
+temperature_df %>%
+  ggplot(mapping = aes(x = betterDates, 
+                       y = `Water Temperature`,
+                       color = `Field Station`)) +
+  geom_line(show.legend = FALSE) +
+  facet_wrap(~ `Field Station`, ncol = 2) +
+  labs(title = "Recorded Water Temperature Over Time",
+       subtitle = "Faceted By NeCSA Field Station",
+       y = "Water Temperature (Celsius)",
+       x = "Date") +
+  scale_x_date(date_breaks = "3 months" , date_labels = "%b-%y") +
+  guides(x =  guide_axis(angle = 30))
+
+```
+
+### Location of Each NeCSA Field Station on Gulf of Maine Leaflet
 
 ```{r field-stations-leaflet, echo = FALSE}
 
