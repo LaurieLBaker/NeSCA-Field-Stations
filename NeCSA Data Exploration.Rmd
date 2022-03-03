@@ -177,3 +177,44 @@ leaflet(field_stations) %>%
     setView(lng = -69, lat = 43.7, zoom = 7.5) 
 
 ```
+
+```{r species-count-by-quadrat-faceted, echo = FALSE}
+
+# Create data frame that only includes quadrats with observed species
+
+transect_df_filter <- transect_df %>%
+  filter(`# per quadrat` >= 1) %>%
+  filter(`# per quadrat` != "ND") %>%
+  select(`Field Station`, Quadrat, Date, `# per quadrat`, `Species Name`)
+  
+# Generate new variable for observation year
+
+transect_df_filter$Year <- format(as.Date(transect_df_filter$Date, format="%m-%d-%Y"),"%Y")
+
+# Generate new variable for average observations per quadrat per year 
+
+transect_df_filter <- transect_df_filter %>%
+  group_by(Quadrat, Year) %>%
+  mutate(`#_mean` = (mean(as.numeric(`# per quadrat`)))) 
+
+# Limit decimal points to 2 (average observations variable)
+
+transect_df_filter$`#_mean` <- format(round(transect_df_filter$`#_mean`, 2), nsmall = 2)
+
+# Convert #_mean to numeric variable
+
+transect_df_filter$`#_mean` <- as.numeric(transect_df_filter$`#_mean`)
+
+# Create bar plot of average species per quadrat per year
+# Green crabs are the only observed species in the dataset
+  
+ggplot(transect_df_filter, aes(x = factor(Quadrat), y = `#_mean`, fill = Year)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Quadrat Number",
+       y = "Mean Yearly Observations",
+       title = "Mean Yearly Green Crab Observations per Quadrat",
+       subtitle = "Grouped by Year",
+       caption = "Note: Only quadrats with non-zero values are displayed (quadrats 2, 15, 21, and 24 omitted)")
+
+
+```
