@@ -178,7 +178,7 @@ leaflet(field_stations) %>%
 
 ```
 
-```{r species-count-by-quadrat-faceted, echo = FALSE}
+```{r species-count-by-quadrat, echo = FALSE}
 
 # Create data frame that only includes quadrats with observed species
 
@@ -218,3 +218,18 @@ ggplot(transect_df_filter, aes(x = factor(Quadrat), y = `#_mean`, fill = Year)) 
 
 
 ```
+
+```{r species-count-by-quadrat-faceted, echo = FALSE} 
+
+ggplot(transect_df_filter, aes(x = factor(Quadrat), y = `#_mean`, fill = factor(Quadrat))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Year, ncol = 1) +
+  labs(x = "Quadrat Number",
+       y = "Mean Yearly Observations",
+       title = "Mean Yearly Green Crab Observations per Quadrat",
+       subtitle = "Grouped by Year",
+       fill = "Quadrat",
+       caption = "Note: Only quadrats with non-zero values are displayed (quadrats 2, 15, 21, and 24 omitted)")
+
+```
+
