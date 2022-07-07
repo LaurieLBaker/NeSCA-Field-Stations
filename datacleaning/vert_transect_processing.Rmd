@@ -1,0 +1,82 @@
+---
+title: "NECSA Data Tidying"
+author: "Laurie Baker"
+date: "7/7/2022"
+output: html_document
+---
+
+```{r libraries, echo = FALSE}
+
+library(tidyverse)
+library(readr)
+library(leaflet)
+library(dplyr)
+library(visdat)
+
+```
+
+
+## Data Overview
+
+```{r data import, echo = FALSE}
+
+files_to_extract <- list.files(path = ".")
+
+post_process <- function(myfile){
+
+#myfile = files_to_extract[2]
+  
+necsa <- read_csv(myfile, skip = 4)
+
+rename_cols <- function(transect_data, transect){
+  renamed_data <- transect_data %>%
+    rename(Species = colnames(transect_data[, 1]),
+         `Start_Distance` = colnames(transect_data[, 2]),
+         `End_Distance` = colnames(transect_data[, 3])) %>%
+    mutate(Transect = transect)
+  renamed_data
+}
+
+df <- rbind(rename_cols(necsa[,1:3], 1), rename_cols(necsa[4:6], 2), rename_cols(necsa[7:9], 3))
+  
+df <- df %>%
+  mutate(Marker = "No Marker")
+
+transect_markers <- data.frame(Species = NA,
+                                "Start_Distance" = NA,
+                                "End_Distance" = rep(seq(0.00001, 20, by = 0.1), 3),
+                                Transect = c(rep(1, 200), rep(2, 200), rep(3, 200)),
+                                Marker = "Marker"
+                               )
+
+transect_markers <- rbind(df, transect_markers)
+
+transect_post_processed <- transect_markers %>%
+  arrange(Transect, End_Distance) %>%
+  mutate(Species_Fill = Species, .before = Species) %>%
+  fill(Species, .direction = "up") %>%
+  mutate("Marker_Zone" = plyr::round_any(End_Distance, 0.1, f = ceiling)) %>%
+  mutate("Range" = ifelse(Marker == "Marker", 0, (End_Distance - Marker_Zone + 0.1)))
+
+transect_clean <- transect_post_processed %>%
+  group_by(Transect, Marker_Zone) %>%
+  slice_max(order_by = Range, n = 1) %>%
+  drop_na(Species)
+
+transect_clean
+
+}
+```
+
+
+```{r}
+visdat::vis_miss(final)
+```
+```{r}
+species_key <- data.frame("Species" = c("AN", "EC"),
+                            "Full Name" = c("Ascophylum Nodosum", "Special Algae"),
+                            "Category" = c("Ascophylum Nodosum", "Other Algae"))
+
+combined_final <- left_join(final, species_key, by = "Species")
+```
+

@@ -1,0 +1,30 @@
+---
+title: "NeSCA Project Info Sheet"
+author: "Laurie Baker"
+date: "4/16/2022"
+output: 
+   html_document:
+     toc: TRUE
+     toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Community Partner Background
+
+
+## Project Overview
+
+## Main data science questions (Includes any key questions you hope the challenge will answer).
+
+## How will addressing this challenge benefit the community you serve?
+
+## Data sets
+
+- Include brief data set overview and description including link to data folder readme.
+
+## Key Milestones and Project/Outcome partners hope to achieve?
+
+## Resources and Background Reading 
